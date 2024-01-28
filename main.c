@@ -1,12 +1,21 @@
-#include <htmc.h>
+#include <string.h>
+#include "./src/htmc.h"
 
-// TODO: Handle cases were compilation doesnt have the extension bc causes a crash rn
+void _index();
 
-htmc_begin
+int main(int argc, char **argv) {
+  _index();
+}
+
+void _index() {
+  htmc_begin;
 
   body(
-    h1("Hello World",N,N),
-    p("Lorem ipsum dolor sit amet consectetur adipisicing elit.",N,N)
+    h1("HTMC 1.1"),
+    h2("Hello World"),
+    h3("I Hate HTML"),
+    p("Supports body, h1..3 and p tags")
   );
 
-htmc_end
+  htmc_end;
+}

@@ -1,16 +1,26 @@
 CC = gcc
+DEBUG = -ggdb
 
-all: libhtmc.a main
+all: libhtmc main run
 
-main: main.c libhtmc.a
-	$(CC) -o main.exe $^ -I.
+main: main.c ./build/libhtmc.a
+	$(CC) -o main.exe $^ $(DEBUG)
+
+run: main
 	./main.exe
 
-libhtmc: htmc.o htmc_helpers.o
-	ar rcs libhtmc.a $^
+clean:
+	rm *.o
+	rm *.a
+	rm *.exe 
+	rm ./build/*
 
-htmc.o: htmc.c
-	$(CC) -c htmc.c -o htmc.o -I.
+libhtmc: htmc.o tags.o
+	ar rcs ./build/libhtmc.a $^
+	rm *.o
 
-htmc_helpers.o: htmc_helpers.c
-	$(CC) -c htmc_helpers.c -o htmc_helpers.o -I.
+htmc.o: ./src/htmc.c
+	$(CC) -c $< -o htmc.o -I./src $(DEBUG)
+
+tags.o: ./src/tags.c
+	$(CC) -c $< -o tags.o -I./src $(DEBUG)
